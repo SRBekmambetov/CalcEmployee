@@ -19,17 +19,24 @@ public class Read {
         }
         BufferedReader bufferedReader = new BufferedReader(fileReader); // соединяем FileReader с BufferedReader
         String line;
+        int j = 1;
         try {
             while ((line = bufferedReader.readLine()) != null) {
                 Employee newEmployee = new Employee();
                 String[] arr = line.split("\\|");
-                newEmployee.setId(Integer.parseInt(arr[0]));
+                try {
+                    newEmployee.setId(Integer.parseInt(arr[0]));
+                } catch (NumberFormatException e) {
+                    System.out.println("Введен неправильный id в строке " + j);
+                    continue;
+                }
                 newEmployee.setFirstName(arr[1]);
                 newEmployee.setSecondName(arr[2]);
                 newEmployee.setMiddleName(arr[3]);
                 newEmployee.setDepartment(arr[4]);
                 newEmployee.setSalary(Integer.parseInt(arr[5]));
                 listEmployee.add(newEmployee);
+                j++;
             }
             bufferedReader.close(); // закрываем поток
         } catch (IOException e) {
